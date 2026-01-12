@@ -1,43 +1,38 @@
-# Astro Starter Kit: Minimal
+# Portfolio (Astro + Tailwind) — Dark-first
+
+## Local development
 
 ```sh
-npm create astro@latest -- --template minimal
+npm install
+npm run dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Open `http://localhost:4321`.
 
-## 🚀 Project Structure
+## Content editing (mock now, replace later)
 
-Inside of your Astro project, you'll see the following folders and files:
+- `src/content/profile.ts`: name/title/bio/links/skills
+- `src/content/projects.ts`: projects list (featured + all)
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+## Pages
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+- `/` → `src/pages/index.astro`
+- `/projects` → `src/pages/projects.astro`
+- `/about` → `src/pages/about.astro`
+- `/contact` → `src/pages/contact.astro`
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+## Vercel deploy
 
-Any static assets, like images, can be placed in the `public/` directory.
+- Import this repo in Vercel
+- Framework preset: **Astro**
+- Build command: `npm run build`
+- Output directory: `dist`
 
-## 🧞 Commands
+### Canonical / OG URL (recommended)
 
-All commands are run from the root of the project, from a terminal:
+Set your site URL in `astro.config.mjs`:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+- `site: 'https://your-domain.com'`
 
-## 👀 Want to learn more?
+This will make canonical URLs and OG image URLs correct.
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).

@@ -1,0 +1,25 @@
+---
+import { profile } from '../content/profile';
+---
+
+<footer class="footer">
+  <div class="container footerInner">
+    <p class="muted">
+      © {new Date().getFullYear()} {profile.name}. All rights reserved.
+    </p>
+    <div class="footerLinks">
+      {profile.links.github && (
+        <a class="navLink" href={profile.links.github} target="_blank" rel="noreferrer">
+          GitHub
+        </a>
+      )}
+      {profile.links.linkedin && (
+        <a class="navLink" href={profile.links.linkedin} target="_blank" rel="noreferrer">
+          LinkedIn
+        </a>
+      )}
+    </div>
+  </div>
+</footer>
+
+

@@ -1,43 +1,43 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import ProjectCard from '../components/ProjectCard.astro';
 import { profile } from '../content/profile';
-import { featuredProjects } from '../content/projects';
 ---
 
 <Layout
-  title="Home"
-  description={profile.summary}
-  pathname="/"
+  title="About"
+  description={`About ${profile.name}. ${profile.summary}`}
+  pathname="/about"
 >
   <div class="container">
-    <section class="hero" data-reveal>
-      <div class="kicker">{profile.location}</div>
-      <h1 class="h1">
-        {profile.name}
-        <span class="muted" style="display:block; font-size: 0.5em; line-height: 1.2; margin-top: 10px;">
-          {profile.title}
-        </span>
-      </h1>
+    <section class="hero" style="padding-bottom: 10px;" data-reveal>
+      <div class="kicker">About</div>
+      <h1 class="h1" style="margin-bottom: 6px;">{profile.name}</h1>
       <p class="lead">{profile.summary}</p>
-
-      <div class="ctaRow">
-        <a class="btn btnPrimary" href="/projects">View projects</a>
-        <a class="btn" href="/contact">Contact</a>
-      </div>
     </section>
 
     <section class="section" data-reveal>
-      <div class="sectionHeader">
-        <h2 class="h2">Featured projects</h2>
-        <a class="navLink" href="/projects">See all</a>
-      </div>
       <div class="grid">
-        {featuredProjects.map((p) => (
-          <div class="col6">
-            <ProjectCard project={p} />
+        <div class="col6">
+          <div class="card">
+            <h2 class="h2">Bio</h2>
+            <div class="muted" style="margin-top: 10px; display: grid; gap: 10px;">
+              {profile.bio.map((p) => (
+                <p style="margin: 0;">{p}</p>
+              ))}
+            </div>
           </div>
-        ))}
+        </div>
+
+        <div class="col6">
+          <div class="card">
+            <h2 class="h2">Highlights</h2>
+            <ul class="muted" style="margin: 10px 0 0; padding-left: 18px;">
+              {profile.highlights.map((h) => (
+                <li>{h}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -70,3 +70,5 @@ import { featuredProjects } from '../content/projects';
     </section>
   </div>
 </Layout>
+
+

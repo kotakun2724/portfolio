@@ -1,0 +1,57 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { profile } from '../content/profile';
+
+const email = profile.links.email ?? 'you@example.com';
+const mailto = `mailto:${email}?subject=${encodeURIComponent('Hello!')}`;
+---
+
+<Layout
+  title="Contact"
+  description={`Contact ${profile.name}.`}
+  pathname="/contact"
+>
+  <div class="container">
+    <section class="hero" style="padding-bottom: 10px;" data-reveal>
+      <div class="kicker">Contact</div>
+      <h1 class="h1" style="margin-bottom: 6px;">Let’s talk</h1>
+      <p class="lead">
+        Reach out for collaboration, opportunities, or just to say hi.
+      </p>
+    </section>
+
+    <section class="section" data-reveal>
+      <div class="grid">
+        <div class="col6">
+          <div class="card">
+            <h2 class="h2">Email</h2>
+            <p class="muted" style="margin: 10px 0 14px;">{email}</p>
+            <a class="btn btnPrimary" href={mailto}>Send an email</a>
+          </div>
+        </div>
+
+        <div class="col6">
+          <div class="card">
+            <h2 class="h2">Links</h2>
+            <div class="ctaRow" style="margin-top: 12px;">
+              {profile.links.github && (
+                <a class="btn" href={profile.links.github} target="_blank" rel="noreferrer">GitHub</a>
+              )}
+              {profile.links.linkedin && (
+                <a class="btn" href={profile.links.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
+              )}
+              {profile.links.x && (
+                <a class="btn" href={profile.links.x} target="_blank" rel="noreferrer">X</a>
+              )}
+              {profile.links.website && (
+                <a class="btn" href={profile.links.website} target="_blank" rel="noreferrer">Website</a>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>
+
+

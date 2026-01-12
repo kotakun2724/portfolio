@@ -1,0 +1,45 @@
+---
+type Props = {
+  title: string;
+  description?: string;
+  pathname?: string;
+  imagePath?: string;
+};
+
+const {
+  title,
+  description = 'Portfolio website.',
+  pathname = '/',
+  imagePath = '/og.svg',
+} = Astro.props;
+
+const siteName = 'Portfolio';
+const canonical = new URL(pathname, Astro.site ?? 'https://example.com').toString();
+const ogImage = new URL(imagePath, Astro.site ?? 'https://example.com').toString();
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="generator" content={Astro.generator} />
+
+<title>{title} | {siteName}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+
+<!-- Cross-document View Transitions (supported browsers) -->
+<meta name="view-transition" content="same-origin" />
+
+<meta property="og:type" content="website" />
+<meta property="og:title" content={`${title} | ${siteName}`} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImage} />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={`${title} | ${siteName}`} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+

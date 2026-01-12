@@ -1,0 +1,31 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { projects } from '../content/projects';
+---
+
+<Layout
+  title="Projects"
+  description="Selected projects and case studies."
+  pathname="/projects"
+>
+  <div class="container">
+    <section class="hero" style="padding-bottom: 10px;" data-reveal>
+      <div class="kicker">Work</div>
+      <h1 class="h1" style="margin-bottom: 6px;">Projects</h1>
+      <p class="lead">A curated list of work across product, UI, and tooling.</p>
+    </section>
+
+    <section class="section" data-reveal>
+      <div class="grid">
+        {projects.map((p) => (
+          <div class="col6">
+            <ProjectCard project={p} />
+          </div>
+        ))}
+      </div>
+    </section>
+  </div>
+</Layout>
+
+

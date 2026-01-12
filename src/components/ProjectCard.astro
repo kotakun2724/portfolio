@@ -1,0 +1,35 @@
+---
+import type { Project } from '../content/projects';
+
+type Props = {
+  project: Project;
+};
+
+const { project } = Astro.props;
+---
+
+<article class="card" id={project.slug}>
+  <div class="kicker">{project.role}</div>
+  <h3 style="margin: 6px 0 6px; font-size: 18px; letter-spacing: -0.01em;">
+    {project.name}
+  </h3>
+  <p class="muted" style="margin: 0;">
+    {project.summary}
+  </p>
+
+  <div class="badgeRow" aria-label="Tech stack">
+    {project.stack.slice(0, 6).map((t) => (
+      <span class="badge">{t}</span>
+    ))}
+  </div>
+
+  <div class="ctaRow" style="margin-top: 12px;">
+    {project.links.map((l) => (
+      <a class="btn" href={l.href} {...(l.href.startsWith('http') ? { target: '_blank', rel: 'noreferrer' } : {})}>
+        {l.label}
+      </a>
+    ))}
+  </div>
+</article>
+
+
