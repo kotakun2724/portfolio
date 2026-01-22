@@ -16,6 +16,22 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    slug: 'vulkan-renderer',
+    name: 'Vulkan Renderer (MoltenVK)',
+    summary:
+      'A learning-focused rendering project using Vulkan API (MoltenVK on macOS). Progresses from triangle rendering to animated triangles and quads.',
+    role: 'Solo Developer',
+    stack: ['C++', 'Vulkan', 'GLFW', 'GLSL', 'CMake', 'MoltenVK'],
+    highlights: [
+      'Vulkan pipeline setup from scratch',
+      'Triangle and quad rendering (2-triangle approach)',
+      'Animated geometry with per-frame updates',
+      'Cross-platform via MoltenVK on macOS',
+    ],
+    links: [{ label: 'GitHub', href: 'https://github.com/kotakun2724/Vulkan' }],
+    featured: true,
+  },
+  {
     slug: 'dungeongen',
     name: 'DungeonGen (Procedural Dungeon Prototype)',
     summary:
