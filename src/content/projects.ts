@@ -12,9 +12,30 @@ export type Project = {
   highlights: string[];
   links: ProjectLink[];
   featured?: boolean;
+  isGame?: boolean;
+  image?: string;
 };
 
 export const projects: Project[] = [
+  {
+    slug: 'mugendungeon',
+    name: 'MUGENDUNGEON',
+    summary:
+      '見下ろし視点の3Dローグライク・ダンジョン探索アクションゲーム。自動生成ダンジョンを探索し、鍵を集めてゴールを目指す。',
+    role: 'ゲーム開発者',
+    stack: ['Unity', 'C#', 'URP', 'ProBuilder'],
+    highlights: [
+      '無限に変化する自動生成ダンジョン',
+      'スタミナ管理と近接アクション戦闘',
+      'ショップシステムとアイテム管理',
+      'スキルツリーによるキャラクター育成',
+      'NPCとの出会いと物語',
+    ],
+    links: [{ label: 'Steam', href: 'https://store.steampowered.com/app/4580570/MUGENDUNGEON/?l=japanese' }],
+    featured: true,
+    isGame: true,
+    image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/4580570/7eba3d646450ed29a07b665cda3608fc732cd33f/ss_7eba3d646450ed29a07b665cda3608fc732cd33f.1920x1080.jpg?t=1775780634',
+  },
   {
     slug: 'vulkan-renderer',
     name: 'Vulkan Renderer (MoltenVK)',

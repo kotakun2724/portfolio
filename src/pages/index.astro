@@ -22,19 +22,19 @@ import { featuredProjects } from '../content/projects';
       <p class="lead">{profile.summary}</p>
 
       <div class="ctaRow">
-        <a class="btn btnPrimary" href="/projects">View projects</a>
+        <a class="btn btnPrimary" href="/projects">作品一覧を見る</a>
         <a class="btn" href="/contact">Contact</a>
       </div>
     </section>
 
     <section class="section" data-reveal>
       <div class="sectionHeader">
-        <h2 class="h2">Featured projects</h2>
+        <h2 class="h2">作品一覧</h2>
         <a class="navLink" href="/projects">See all</a>
       </div>
       <div class="grid">
         {featuredProjects.map((p) => (
-          <div class="col6">
+          <div class={p.isGame ? "col12" : "col6"}>
             <ProjectCard project={p} />
           </div>
         ))}
