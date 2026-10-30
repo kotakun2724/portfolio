@@ -1,0 +1,43 @@
+<div class="world" data-world>
+  <div class="world-topline"><span><i class="status-dot"></i> LITTLE WORLD / 001</span><span class="world-live">INTERACTIVE 3D</span></div>
+  <div class="world-stage" id="world-stage">
+    <div class="world-fallback" aria-hidden="true"><div class="fallback-island"><div class="fallback-gate">✧</div><i></i><i></i><i></i></div></div>
+    <div class="world-canvas" data-scene-host></div>
+    <div class="crystal-labels" data-crystal-labels hidden>
+      {[1, 2, 3].map(n => <button class="crystal-hit" data-crystal={n - 1} aria-label={`クリスタル${n}を集める`}><span>✦</span></button>)}
+    </div>
+    <div class="world-axis" aria-hidden="true"><span>Y</span><i></i><span>X</span></div>
+    <div class="world-caption"><span class="mono">THE PLAYGROUND</span><p>小さな世界に、好奇心を。</p></div>
+  </div>
+  <div class="world-hud">
+    <div><span class="hud-label">SIDE QUEST</span><p data-quest-status role="status" aria-live="polite">クリスタルを見つけよう <span>0 / 3</span></p></div>
+    <button class="icon-button" data-scene-reset aria-label="ダンジョンとクリスタルをリセット" title="もう一度遊ぶ" disabled>↻</button>
+    <button class="icon-button" data-scene-pause aria-label="アニメーションを一時停止" aria-pressed="false" title="アニメーションを一時停止" disabled>Ⅱ</button>
+  </div>
+  <p class="world-help" data-scene-help>ドラッグで回転 · 光るクリスタルをクリック</p>
+  <noscript><p class="world-help">3Dで遊ぶにはJavaScriptを有効にしてください。作品は下からご覧いただけます。</p></noscript>
+</div>
+<script>
+  const world = document.querySelector<HTMLElement>('[data-world]');
+  if (world) {
+    const load = async () => {
+      try {
+        const { initDungeon } = await import('../scripts/dungeon');
+        initDungeon(world);
+      } catch (error) {
+        console.warn('Dungeon initialization failed:', error);
+        world.dataset.state = 'fallback';
+        const help = world.querySelector('[data-scene-help]');
+        const status = world.querySelector('[data-quest-status]');
+        if (help) help.textContent = '3Dの代わりに静止画を表示しています。作品は下へ。';
+        if (status) status.textContent = 'STATIC WORLD';
+      }
+    };
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(entries => {
+        if (entries.some(entry => entry.isIntersecting)) { observer.disconnect(); void load(); }
+      }, { rootMargin: '200px' });
+      observer.observe(world);
+    } else void load();
+  }
+</script>

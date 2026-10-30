@@ -1,74 +1,14 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ContactBanner from '../components/ContactBanner.astro';
 import { profile } from '../content/profile';
 ---
-
-<Layout
-  title="About"
-  description={`About ${profile.name}. ${profile.summary}`}
-  pathname="/about"
->
+<Layout title="About" description={profile.summary} pathname="/about">
   <div class="container">
-    <section class="hero" style="padding-bottom: 10px;" data-reveal>
-      <div class="kicker">About</div>
-      <h1 class="h1" style="margin-bottom: 6px;">{profile.name}</h1>
-      <p class="lead">{profile.summary}</p>
-    </section>
-
-    <section class="section" data-reveal>
-      <div class="grid">
-        <div class="col6">
-          <div class="card">
-            <h2 class="h2">Bio</h2>
-            <div class="muted" style="margin-top: 10px; display: grid; gap: 10px;">
-              {profile.bio.map((p) => (
-                <p style="margin: 0;">{p}</p>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div class="col6">
-          <div class="card">
-            <h2 class="h2">Highlights</h2>
-            <ul class="muted" style="margin: 10px 0 0; padding-left: 18px;">
-              {profile.highlights.map((h) => (
-                <li>{h}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" data-reveal>
-      <div class="sectionHeader">
-        <h2 class="h2">Skills</h2>
-      </div>
-      <div class="grid">
-        <div class="col6">
-          <div class="card">
-            <div class="kicker">Primary</div>
-            <div class="badgeRow">
-              {profile.skills.primary.map((s) => (
-                <span class="badge">{s}</span>
-              ))}
-            </div>
-          </div>
-        </div>
-        <div class="col6">
-          <div class="card">
-            <div class="kicker">Tools</div>
-            <div class="badgeRow">
-              {profile.skills.tools.map((s) => (
-                <span class="badge">{s}</span>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <section class="page-hero about-hero"><div><p class="eyebrow">02 / PLAYER PROFILE</p><h1>Hi, I’m<br /><em>Kota Ito.</em></h1><p class="muted">Game Developer / Computer Science & Engineering Student</p></div><div class="player-card"><img src="/kotakun.jpg" alt="Kota Ito のプロフィール画像" width="320" height="320" /><span class="mono">PLAYER 01 / JAPAN</span></div></section>
+    <section class="bio-section"><p class="eyebrow">THE STORY SO FAR</p><div><h2>仕組みを知る。<br />遊びに変える。</h2><p>日本でコンピュータサイエンスを学びながら、ゲームやツールを制作しています。Unity（C#）やUnreal Engine 5を使い、ゲームプレイの仕組み、プロシージャル生成、ゲームAIに取り組んでいます。</p><p>C++、OpenGL、SFML、Vulkanを使ったグラフィックスやシミュレーションにも関心があります。画面に描かれるものの、その裏側まで理解したい。そんな好奇心が制作の原動力です。</p><p>競技プログラミングや、LT・ハッカソンなどのコミュニティ活動を通して、学んだことを共有するのも好きです。</p></div></section>
+    <section class="toolkit-section"><div class="section-heading"><div><p class="eyebrow">EQUIPMENT / SKILLS</p><h2>My <em>toolkit.</em></h2></div></div><div class="toolkit-grid"><div><span class="mono accent">01 / DEVELOPMENT</span><h3>遊びをつくる道具</h3><div class="tags">{profile.skills.primary.map(skill => <span>{skill}</span>)}</div></div><div><span class="mono accent">02 / WORKFLOW</span><h3>アイデアを形にする環境</h3><div class="tags">{profile.skills.tools.map(skill => <span>{skill}</span>)}</div></div></div></section>
+    <section class="focus-section"><p class="eyebrow">CURRENT INTERESTS</p><div><span>01</span><h3>Gameplay systems</h3><p>操作、戦闘、成長。遊びの手触りをつくる。</p></div><div><span>02</span><h3>Procedural worlds</h3><p>アルゴリズムから、まだ見たことのない世界へ。</p></div><div><span>03</span><h3>Graphics & rendering</h3><p>ピクセルの向こう側にある仕組みを探る。</p></div></section>
   </div>
+  <ContactBanner />
 </Layout>
-
-
