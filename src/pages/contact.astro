@@ -1,57 +1,21 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { profile } from '../content/profile';
-
-const email = profile.links.email ?? 'you@example.com';
-const mailto = `mailto:${email}?subject=${encodeURIComponent('Hello!')}`;
+const email = profile.links.email!;
 ---
-
-<Layout
-  title="Contact"
-  description={`Contact ${profile.name}.`}
-  pathname="/contact"
->
-  <div class="container">
-    <section class="hero" style="padding-bottom: 10px;" data-reveal>
-      <div class="kicker">Contact</div>
-      <h1 class="h1" style="margin-bottom: 6px;">Let’s talk</h1>
-      <p class="lead">
-        Reach out for collaboration, opportunities, or just to say hi.
-      </p>
-    </section>
-
-    <section class="section" data-reveal>
-      <div class="grid">
-        <div class="col6">
-          <div class="card">
-            <h2 class="h2">Email</h2>
-            <p class="muted" style="margin: 10px 0 14px;">{email}</p>
-            <a class="btn btnPrimary" href={mailto}>Send an email</a>
-          </div>
-        </div>
-
-        <div class="col6">
-          <div class="card">
-            <h2 class="h2">Links</h2>
-            <div class="ctaRow" style="margin-top: 12px;">
-              {profile.links.github && (
-                <a class="btn" href={profile.links.github} target="_blank" rel="noreferrer">GitHub</a>
-              )}
-              {profile.links.linkedin && (
-                <a class="btn" href={profile.links.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
-              )}
-              {profile.links.x && (
-                <a class="btn" href={profile.links.x} target="_blank" rel="noreferrer">X</a>
-              )}
-              {profile.links.website && (
-                <a class="btn" href={profile.links.website} target="_blank" rel="noreferrer">Website</a>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+<Layout title="Contact" description="ゲーム開発、コラボレーションなど、Kota Ito へのお問い合わせ。" pathname="/contact">
+  <div class="container contact-page">
+    <section class="page-hero"><p class="eyebrow"><span class="status-dot"></span>03 / START A CONVERSATION</p><h1>Great things<br />start with <em>hello.</em></h1><p class="muted">一緒につくりたいもの、ゲームの話、ちょっとした質問。<br />あなたからのお便りをお待ちしています。</p></section>
+    <section class="contact-email" aria-label="メールで連絡"><span class="mono">SAY HELLO</span><a href={`mailto:${email}`}>{email}<span aria-hidden="true">↗</span></a><div><button class="text-link" data-copy-email={email}>メールアドレスをコピー <span aria-hidden="true">⧉</span></button><span role="status" aria-live="polite" data-copy-status></span></div></section>
+    <section class="social-rows" aria-label="ソーシャルリンク">{[['GitHub', 'Code & experiments', profile.links.github], ['LinkedIn', 'Profile & connections', profile.links.linkedin], ['X', 'Thoughts & updates', profile.links.x]].map(([name, caption, href], index) => <a href={href} target="_blank" rel="noreferrer"><span class="mono">0{index + 1}</span><h2>{name}</h2><span>{caption}</span><b aria-hidden="true">↗</b></a>)}</section>
+    <p class="contact-signoff mono">THANKS FOR STOPPING BY. SEE YOU IN THE NEXT WORLD ✳</p>
   </div>
 </Layout>
-
-
+<script>
+  const button = document.querySelector<HTMLButtonElement>('[data-copy-email]');
+  button?.addEventListener('click', async () => {
+    const status = document.querySelector('[data-copy-status]');
+    try { await navigator.clipboard.writeText(button.dataset.copyEmail!); if (status) status.textContent = 'コピーしました'; }
+    catch { if (status) status.textContent = '上のメールアドレスを選択してコピーしてください'; }
+  });
+</script>

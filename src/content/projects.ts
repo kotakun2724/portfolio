@@ -34,7 +34,7 @@ export const projects: Project[] = [
     links: [{ label: 'Steam', href: 'https://store.steampowered.com/app/4580570/MUGENDUNGEON/?l=japanese' }],
     featured: true,
     isGame: true,
-    image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/4580570/7eba3d646450ed29a07b665cda3608fc732cd33f/ss_7eba3d646450ed29a07b665cda3608fc732cd33f.1920x1080.jpg?t=1775780634',
+    image: '/images/mugendungeon.jpg',
   },
   {
     slug: '1-44mb',
@@ -52,7 +52,7 @@ export const projects: Project[] = [
     links: [{ label: 'GitHub', href: 'https://github.com/kotakun2724/1.44MB' }],
     featured: true,
     isGame: true,
-    image: 'https://raw.githubusercontent.com/kotakun2724/1.44MB/main/screenshots/title.png',
+    image: '/images/lost-disk.png',
   },
   {
     slug: 'vulkan-terrain',

@@ -8,12 +8,12 @@ type Props = {
 
 const {
   title,
-  description = 'Portfolio website.',
+  description = 'ゲームと、遊べる世界をつくる。ゲーム開発者 Kota Ito のポートフォリオ。',
   pathname = '/',
   imagePath = '/og.svg',
 } = Astro.props;
 
-const siteName = 'Portfolio';
+const siteName = 'Kota Ito — Game Developer';
 const canonical = new URL(pathname, Astro.site ?? 'https://example.com').toString();
 const ogImage = new URL(imagePath, Astro.site ?? 'https://example.com').toString();
 ---
