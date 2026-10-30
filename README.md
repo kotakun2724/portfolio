@@ -27,7 +27,7 @@ npm run preview
 - `src/components/Dungeon.astro`: 3DエリアのUIと遅延読み込み
 - `src/styles/global.css`: 色、タイポグラフィ、レスポンシブレイアウト
 
-ページは `/`、`/projects`、`/about`、`/contact`。元のURLと作品リンクを維持しています。作品一覧ではGame/Graphicsを絞り込み、各作品の開発ポイントを開けます。
+ページは `/`、`/projects`、`/about`、`/contact`。英語版は同じ構成で `/en` 以下です。ヘッダーの JA / EN で、見ているページの言語を切り替えます。作品一覧ではGame/Graphicsを絞り込み、各作品の開発ポイントを開けます。文言は `src/i18n.ts`、作品の説明は `src/content/projects.ts` です。
 
 ## 3Dの操作と配慮
 

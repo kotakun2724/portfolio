@@ -38,6 +38,20 @@ export function initDungeon(root: HTMLElement) {
   const pauseButton =
     root.querySelector<HTMLButtonElement>("[data-scene-pause]")!;
   const help = root.querySelector<HTMLElement>("[data-scene-help]")!;
+  const copy = {
+    staticWorld: root.dataset.staticWorld ?? "STATIC WORLD",
+    fallbackHelp: root.dataset.fallbackHelp ?? "",
+    interruptedHelp: root.dataset.interruptedHelp ?? "",
+    canvasLabel: root.dataset.canvasLabel ?? "",
+    pauseLabel: root.dataset.pauseLabel ?? "",
+    resumeLabel: root.dataset.resumeLabel ?? "",
+    portalStatus: root.dataset.portalStatus ?? "",
+    thanksHelp: root.dataset.thanksHelp ?? "",
+    questTemplate: root.dataset.questTemplate ?? "{n} / 3",
+    helpText: root.dataset.helpText ?? "",
+  };
+  const questStatus = (count: number) =>
+    copy.questTemplate.replaceAll("{n}", String(count));
   const motionPreference = matchMedia("(prefers-reduced-motion: reduce)");
   const events = new AbortController();
   const scene = new Scene();
@@ -53,8 +67,8 @@ export function initDungeon(root: HTMLElement) {
   } catch (error) {
     console.warn("WebGL scene unavailable:", error);
     root.dataset.state = "fallback";
-    status.textContent = "STATIC WORLD";
-    help.textContent = "3Dの代わりに静止画を表示しています。作品は下へ。";
+    status.textContent = copy.staticWorld;
+    help.textContent = copy.fallbackHelp;
     return;
   }
   renderer.setPixelRatio(Math.min(devicePixelRatio, 1.6));
@@ -67,10 +81,7 @@ export function initDungeon(root: HTMLElement) {
   const canvas = renderer.domElement;
   canvas.tabIndex = 0;
   canvas.setAttribute("role", "img");
-  canvas.setAttribute(
-    "aria-label",
-    "浮島のダンジョン。ドラッグ、または左右の矢印キーで回転。Tabキーで3つのクリスタルを選択し、Enterで集められます。",
-  );
+  canvas.setAttribute("aria-label", copy.canvasLabel);
   canvas.style.touchAction = "pan-y";
   const camera = new OrthographicCamera(-6, 6, 5, -5, 0.1, 80);
   camera.position.set(10, 10, 13);
@@ -386,11 +397,9 @@ export function initDungeon(root: HTMLElement) {
     pauseButton.setAttribute("aria-pressed", String(paused));
     pauseButton.setAttribute(
       "aria-label",
-      paused ? "アニメーションを再開" : "アニメーションを一時停止",
+      paused ? copy.resumeLabel : copy.pauseLabel,
     );
-    pauseButton.title = paused
-      ? "アニメーションを再開"
-      : "アニメーションを一時停止";
+    pauseButton.title = paused ? copy.resumeLabel : copy.pauseLabel;
     pauseButton.textContent = paused ? "▷" : "Ⅱ";
     previousTime = 0;
     requestRender();
@@ -402,12 +411,12 @@ export function initDungeon(root: HTMLElement) {
     const wasFocused = document.activeElement === buttons[index];
     buttons[index].hidden = true;
     if (collected.size === 3) {
-      status.textContent = "PORTAL OPEN! 探索クリア ✦ 3 / 3";
+      status.textContent = copy.portalStatus;
       portalMaterial.uniforms.unlocked.value = 1;
-      help.textContent = "小さな冒険をありがとう。次は作品の世界へ！";
+      help.textContent = copy.thanksHelp;
       if (wasFocused) resetButton.focus({ preventScroll: true });
     } else {
-      status.textContent = `クリスタルを見つけよう　${collected.size} / 3`;
+      status.textContent = questStatus(collected.size);
       if (wasFocused)
         buttons
           .find((_, next) => !collected.has(next))
@@ -430,8 +439,8 @@ export function initDungeon(root: HTMLElement) {
       });
       world.rotation.y = 0;
       portalMaterial.uniforms.unlocked.value = 0;
-      status.textContent = "クリスタルを見つけよう　0 / 3";
-      help.textContent = "ドラッグで回転 · 光るクリスタルをクリック";
+      status.textContent = questStatus(0);
+      help.textContent = copy.helpText;
       requestRender();
     },
     { signal: events.signal },
@@ -546,8 +555,8 @@ export function initDungeon(root: HTMLElement) {
       canvas.hidden = true;
       pauseButton.disabled = true;
       resetButton.disabled = true;
-      status.textContent = "STATIC WORLD";
-      help.textContent = "3Dの表示が中断されたため、静止画を表示しています。";
+      status.textContent = copy.staticWorld;
+      help.textContent = copy.interruptedHelp;
     },
     { signal: events.signal },
   );
@@ -561,13 +570,8 @@ export function initDungeon(root: HTMLElement) {
       pauseButton.disabled = false;
       resetButton.disabled = false;
       status.textContent =
-        collected.size === 3
-          ? "PORTAL OPEN! 探索クリア ✦ 3 / 3"
-          : `クリスタルを見つけよう　${collected.size} / 3`;
-      help.textContent =
-        collected.size === 3
-          ? "小さな冒険をありがとう。次は作品の世界へ！"
-          : "ドラッグで回転 · 光るクリスタルをクリック";
+        collected.size === 3 ? copy.portalStatus : questStatus(collected.size);
+      help.textContent = collected.size === 3 ? copy.thanksHelp : copy.helpText;
       previousTime = 0;
       requestRender();
     },

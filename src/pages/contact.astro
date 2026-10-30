@@ -1,21 +1,4 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { profile } from '../content/profile';
-const email = profile.links.email!;
+import Contact from '../views/Contact.astro';
 ---
-<Layout title="Contact" description="ゲーム開発、コラボレーションなど、Kota Ito へのお問い合わせ。" pathname="/contact">
-  <div class="container contact-page">
-    <section class="page-hero"><p class="eyebrow"><span class="status-dot"></span>03 / START A CONVERSATION</p><h1>Great things<br />start with <em>hello.</em></h1><p class="muted">一緒につくりたいもの、ゲームの話、ちょっとした質問。<br />あなたからのお便りをお待ちしています。</p></section>
-    <section class="contact-email" aria-label="メールで連絡"><span class="mono">SAY HELLO</span><a href={`mailto:${email}`}>{email}<span aria-hidden="true">↗</span></a><div><button class="text-link" data-copy-email={email}>メールアドレスをコピー <span aria-hidden="true">⧉</span></button><span role="status" aria-live="polite" data-copy-status></span></div></section>
-    <section class="social-rows" aria-label="ソーシャルリンク">{[['GitHub', 'Code & experiments', profile.links.github], ['LinkedIn', 'Profile & connections', profile.links.linkedin], ['X', 'Thoughts & updates', profile.links.x]].map(([name, caption, href], index) => <a href={href} target="_blank" rel="noreferrer"><span class="mono">0{index + 1}</span><h2>{name}</h2><span>{caption}</span><b aria-hidden="true">↗</b></a>)}</section>
-    <p class="contact-signoff mono">THANKS FOR STOPPING BY. SEE YOU IN THE NEXT WORLD ✳</p>
-  </div>
-</Layout>
-<script>
-  const button = document.querySelector<HTMLButtonElement>('[data-copy-email]');
-  button?.addEventListener('click', async () => {
-    const status = document.querySelector('[data-copy-status]');
-    try { await navigator.clipboard.writeText(button.dataset.copyEmail!); if (status) status.textContent = 'コピーしました'; }
-    catch { if (status) status.textContent = '上のメールアドレスを選択してコピーしてください'; }
-  });
-</script>
+<Contact locale="ja" />

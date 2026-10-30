@@ -1,4 +1,18 @@
+---
+import type { Locale } from '../i18n';
+import { localizedPath, useCopy } from '../i18n';
+
+type Props = { locale: Locale };
+const { locale } = Astro.props;
+const t = useCopy(locale);
+---
 <section class="contact-banner container">
-  <div><p class="eyebrow">NEXT LEVEL / CONTACT</p><h2>Let’s make<br /><em>something fun.</em></h2><p class="muted">ゲームの話も、新しいアイデアも。お気軽にどうぞ。</p></div>
-  <a class="contact-orb" href="/contact" aria-label="お問い合わせへ"><span aria-hidden="true">↗</span><span>LET’S TALK</span></a>
+  <div>
+    <p class="eyebrow">{t.bannerEyebrow}</p>
+    <h2>{t.bannerBefore}<br /><em>{t.bannerEm}</em></h2>
+    <p class="muted">{t.bannerBody}</p>
+  </div>
+  <a class="contact-orb" href={localizedPath(locale, '/contact')} aria-label={t.bannerAria}>
+    <span aria-hidden="true">↗</span><span>{t.bannerOrb}</span>
+  </a>
 </section>

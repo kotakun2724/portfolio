@@ -1,3 +1,5 @@
+import type { Locale } from '../i18n';
+
 export type SocialLinks = {
   github?: string;
   linkedin?: string;
@@ -21,42 +23,65 @@ export type Profile = {
   links: SocialLinks;
 };
 
-export const profile: Profile = {
-  name: 'Kota Ito',
-  initials: 'KI',
-  title: 'Game Developer / CS Student',
-  location: 'Japan',
-  summary:
-    'Computer Science & Engineering student building games and tools with Unity and Unreal Engine. Interested in graphics, procedural generation, and game AI. Competitive programmer (AtCoder ~1200).',
-  bio: [
-    'I build gameplay systems and prototypes in Unity (C#) and Unreal Engine 5, focusing on solid architecture and performance.',
-    'I enjoy graphics and simulation work (OpenGL/SFML), and I like turning algorithms into interactive demos.',
-    'Outside development, I’m active in tech communities and enjoy giving short talks and sharing what I learn.',
-  ],
-  highlights: [
-    'AtCoder rating ~1200 (light-blue)',
-    'Unity + Unreal Engine 5 prototyping',
-    'Procedural generation & lighting',
-    'Graphics / low-level fundamentals (C++ / OpenGL / SFML)',
-    'Talks & community activities (LTs / hackathons)',
-  ],
-  skills: {
-    primary: [
-      'C++',
-      'C#',
-      'TypeScript',
-      'Unity',
-      'Unreal Engine 5',
-      'OpenGL',
-      'SFML',
-      'React',
+const links: SocialLinks = {
+  github: 'https://github.com/kotakun2724',
+  linkedin: 'https://www.linkedin.com/in/%E8%88%AA%E5%A4%A7-%E4%BC%8A%E8%97%A4-a32968358/',
+  x: 'https://x.com/kotakun2724',
+  email: 'itokota3t@gmail.com',
+};
+
+const skills = {
+  primary: ['C++', 'C#', 'TypeScript', 'Unity', 'Unreal Engine 5', 'OpenGL', 'SFML', 'React'],
+  tools: ['Visual Studio', 'Visual Studio Code', 'Git', 'GitHub', 'Git LFS'],
+};
+
+const profiles: Record<Locale, Profile> = {
+  ja: {
+    name: 'Kota Ito',
+    initials: 'KI',
+    title: 'ゲーム開発者 / 情報系の学生',
+    location: '日本',
+    summary:
+      'UnityとUnreal Engineでゲームやツールをつくる、コンピュータサイエンスの学生。グラフィックス、プロシージャル生成、ゲームAIに関心があります。競技プログラミング（AtCoder レート約1200）。',
+    bio: [
+      'Unity（C#）とUnreal Engine 5で、ゲームプレイの仕組みやプロトタイプを、設計とパフォーマンスを意識してつくっています。',
+      'OpenGLやSFMLを使ったグラフィックスやシミュレーションが好きで、アルゴリズムを触れるデモにすることを楽しんでいます。',
+      '開発の外では技術コミュニティに参加し、短い登壇で学んだことを共有しています。',
     ],
-    tools: ['Visual Studio', 'Visual Studio Code', 'Git', 'GitHub', 'Git LFS'],
+    highlights: [
+      'AtCoder レート約1200（水色）',
+      'UnityとUnreal Engine 5でのプロトタイピング',
+      'プロシージャル生成とライティング',
+      'グラフィックスの基礎（C++ / OpenGL / SFML）',
+      '登壇とコミュニティ活動（LT / ハッカソン）',
+    ],
+    skills,
+    links,
   },
-  links: {
-    github: 'https://github.com/kotakun2724',
-    linkedin: 'https://www.linkedin.com/in/%E8%88%AA%E5%A4%A7-%E4%BC%8A%E8%97%A4-a32968358/',
-    x: 'https://x.com/kotakun2724',
-    email: 'itokota3t@gmail.com',
+  en: {
+    name: 'Kota Ito',
+    initials: 'KI',
+    title: 'Game Developer / CS Student',
+    location: 'Japan',
+    summary:
+      'Computer Science & Engineering student building games and tools with Unity and Unreal Engine. Interested in graphics, procedural generation, and game AI. Competitive programmer (AtCoder ~1200).',
+    bio: [
+      'I build gameplay systems and prototypes in Unity (C#) and Unreal Engine 5, focusing on solid architecture and performance.',
+      'I enjoy graphics and simulation work (OpenGL/SFML), and I like turning algorithms into interactive demos.',
+      'Outside development, I’m active in tech communities and enjoy giving short talks and sharing what I learn.',
+    ],
+    highlights: [
+      'AtCoder rating ~1200 (light-blue)',
+      'Unity + Unreal Engine 5 prototyping',
+      'Procedural generation & lighting',
+      'Graphics / low-level fundamentals (C++ / OpenGL / SFML)',
+      'Talks & community activities (LTs / hackathons)',
+    ],
+    skills,
+    links,
   },
 };
+
+export function getProfile(locale: Locale) {
+  return profiles[locale];
+}

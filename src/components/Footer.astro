@@ -1,10 +1,21 @@
 ---
-import { profile } from '../content/profile';
+import type { Locale } from '../i18n';
+import { localizedPath, useCopy } from '../i18n';
+import { getProfile } from '../content/profile';
+
+type Props = { locale: Locale };
+const { locale } = Astro.props;
+const t = useCopy(locale);
+const profile = getProfile(locale);
 ---
 <footer class="site-footer">
   <div class="container footer-inner">
-    <a class="brand" href="/">KOTA ITO<span class="brand-dot">.</span></a>
-    <p>© {new Date().getFullYear()} Kota Ito <span class="footer-note">/ Made with curiosity.</span></p>
-    <div class="footer-links"><a href={profile.links.github} target="_blank" rel="noreferrer">GitHub ↗</a><a href={profile.links.x} target="_blank" rel="noreferrer">X ↗</a><a href="/contact">Contact ↗</a></div>
+    <a class="brand" href={localizedPath(locale, '/')}>KOTA ITO<span class="brand-dot">.</span></a>
+    <p>© {new Date().getFullYear()} Kota Ito <span class="footer-note">/ {t.footerNote}</span></p>
+    <div class="footer-links">
+      <a href={profile.links.github} target="_blank" rel="noreferrer">GitHub ↗</a>
+      <a href={profile.links.x} target="_blank" rel="noreferrer">X ↗</a>
+      <a href={localizedPath(locale, '/contact')}>{t.footerContact} ↗</a>
+    </div>
   </div>
 </footer>

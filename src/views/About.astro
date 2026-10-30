@@ -1,0 +1,65 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ContactBanner from '../components/ContactBanner.astro';
+import { getProfile } from '../content/profile';
+import type { Locale } from '../i18n';
+import { useCopy } from '../i18n';
+
+type Props = { locale: Locale };
+const { locale } = Astro.props;
+const t = useCopy(locale);
+const profile = getProfile(locale);
+---
+<Layout title={t.aboutTitle} description={profile.summary} pathname="/about" locale={locale}>
+  <div class="container">
+    <section class="page-hero about-hero">
+      <div>
+        <p class="eyebrow">{t.aboutEyebrow}</p>
+        <h1>{t.aboutLine1}<br /><em>{t.aboutLine2}</em>{t.aboutLine3}</h1>
+        <p class="muted">{t.aboutRole}</p>
+      </div>
+      <div class="player-card">
+        <img src="/kotakun.jpg" alt={t.aboutPhotoAlt} width="320" height="320" />
+        <span class="mono">{t.aboutPlayer}</span>
+      </div>
+    </section>
+    <section class="bio-section">
+      <p class="eyebrow">{t.storyEyebrow}</p>
+      <div>
+        <h2>{t.storyLine1}<br />{t.storyLine2}</h2>
+        {t.story.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+    </section>
+    <section class="toolkit-section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">{t.skillsEyebrow}</p>
+          <h2>{t.skillsTitleBefore}<em>{t.skillsTitleEm}</em></h2>
+        </div>
+      </div>
+      <div class="toolkit-grid">
+        <div>
+          <span class="mono accent">{t.devLabel}</span>
+          <h3>{t.devTitle}</h3>
+          <div class="tags">{profile.skills.primary.map((skill) => <span>{skill}</span>)}</div>
+        </div>
+        <div>
+          <span class="mono accent">{t.flowLabel}</span>
+          <h3>{t.flowTitle}</h3>
+          <div class="tags">{profile.skills.tools.map((skill) => <span>{skill}</span>)}</div>
+        </div>
+      </div>
+    </section>
+    <section class="focus-section">
+      <p class="eyebrow">{t.interestsEyebrow}</p>
+      {t.interests.map((item, index) => (
+        <div>
+          <span>0{index + 1}</span>
+          <h3>{item.title}</h3>
+          <p>{item.body}</p>
+        </div>
+      ))}
+    </section>
+  </div>
+  <ContactBanner locale={locale} />
+</Layout>

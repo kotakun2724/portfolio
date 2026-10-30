@@ -1,0 +1,54 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getProfile } from '../content/profile';
+import type { Locale } from '../i18n';
+import { useCopy } from '../i18n';
+
+type Props = { locale: Locale };
+const { locale } = Astro.props;
+const t = useCopy(locale);
+const email = getProfile(locale).links.email!;
+const socialHrefs = [getProfile(locale).links.github, getProfile(locale).links.linkedin, getProfile(locale).links.x];
+---
+<Layout title={t.contactTitle} description={t.contactDescription} pathname="/contact" locale={locale}>
+  <div class="container contact-page">
+    <section class="page-hero">
+      <p class="eyebrow"><span class="status-dot"></span> {t.contactEyebrow}</p>
+      <h1>{t.contactLine1}<br />{t.contactLine2}<em>{t.contactEm}</em>{t.contactAfter}</h1>
+      <p class="muted">{t.contactBody}</p>
+    </section>
+    <section class="contact-email" aria-label={t.contactEmailAria}>
+      <span class="mono">{t.sayHello}</span>
+      <a href={`mailto:${email}`}>{email}<span aria-hidden="true">↗</span></a>
+      <div>
+        <button class="text-link" data-copy-email={email} data-copied={t.copied} data-copy-failed={t.copyFailed}>
+          {t.copyEmail} <span aria-hidden="true">⧉</span>
+        </button>
+        <span role="status" aria-live="polite" data-copy-status></span>
+      </div>
+    </section>
+    <section class="social-rows" aria-label={t.socialAria}>
+      {t.social.map((item, index) => (
+        <a href={socialHrefs[index]} target="_blank" rel="noreferrer">
+          <span class="mono">0{index + 1}</span>
+          <h2>{item.name}</h2>
+          <span>{item.caption}</span>
+          <b aria-hidden="true">↗</b>
+        </a>
+      ))}
+    </section>
+    <p class="contact-signoff mono">{t.signoff}</p>
+  </div>
+</Layout>
+<script>
+  const button = document.querySelector<HTMLButtonElement>('[data-copy-email]');
+  button?.addEventListener('click', async () => {
+    const status = document.querySelector('[data-copy-status]');
+    try {
+      await navigator.clipboard.writeText(button.dataset.copyEmail!);
+      if (status) status.textContent = button.dataset.copied ?? '';
+    } catch {
+      if (status) status.textContent = button.dataset.copyFailed ?? '';
+    }
+  });
+</script>

@@ -1,45 +1,61 @@
 ---
+import type { Locale } from '../i18n';
+import { localizedPath, locales, useCopy } from '../i18n';
+
 type Props = {
   title: string;
   description?: string;
   pathname?: string;
+  locale: Locale;
   imagePath?: string;
 };
 
 const {
   title,
-  description = 'ゲームと、遊べる世界をつくる。ゲーム開発者 Kota Ito のポートフォリオ。',
+  description,
   pathname = '/',
+  locale,
   imagePath = '/og.svg',
 } = Astro.props;
-
-const siteName = 'Kota Ito — Game Developer';
-const canonical = new URL(pathname, Astro.site ?? 'https://example.com').toString();
-const ogImage = new URL(imagePath, Astro.site ?? 'https://example.com').toString();
+const t = useCopy(locale);
+const summary = description ?? t.homeDescription;
+const site = Astro.site ?? 'https://kotakun.dev';
+const canonical = new URL(localizedPath(locale, pathname), site).toString();
+const ogImage = new URL(imagePath, site).toString();
+const pageTitle = `${title} | ${t.siteName}`;
 ---
 
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="generator" content={Astro.generator} />
 
-<title>{title} | {siteName}</title>
-<meta name="description" content={description} />
+<title>{pageTitle}</title>
+<meta name="description" content={summary} />
 <link rel="canonical" href={canonical} />
+{
+  locales.map((item) => (
+    <link
+      rel="alternate"
+      hreflang={item}
+      href={new URL(localizedPath(item, pathname), site).toString()}
+    />
+  ))
+}
+<link rel="alternate" hreflang="x-default" href={new URL(localizedPath('ja', pathname), site).toString()} />
 
-<!-- Cross-document View Transitions (supported browsers) -->
 <meta name="view-transition" content="same-origin" />
 
 <meta property="og:type" content="website" />
-<meta property="og:title" content={`${title} | ${siteName}`} />
-<meta property="og:description" content={description} />
+<meta property="og:locale" content={locale === 'ja' ? 'ja_JP' : 'en_US'} />
+<meta property="og:locale:alternate" content={locale === 'ja' ? 'en_US' : 'ja_JP'} />
+<meta property="og:title" content={pageTitle} />
+<meta property="og:description" content={summary} />
 <meta property="og:url" content={canonical} />
 <meta property="og:image" content={ogImage} />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content={`${title} | ${siteName}`} />
-<meta name="twitter:description" content={description} />
+<meta name="twitter:title" content={pageTitle} />
+<meta name="twitter:description" content={summary} />
 <meta name="twitter:image" content={ogImage} />
 
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-
-

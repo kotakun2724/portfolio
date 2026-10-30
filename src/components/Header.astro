@@ -1,13 +1,28 @@
 ---
-const path = Astro.url.pathname;
+import type { Locale } from '../i18n';
+import { localizedPath, pathWithoutLocale, useCopy } from '../i18n';
+
+type Props = { locale: Locale };
+const { locale } = Astro.props;
+const t = useCopy(locale);
+const current = pathWithoutLocale(Astro.url.pathname);
+const item = (path: string) => current === path || (path !== '/' && current.startsWith(path));
 ---
 <header class="site-header">
   <div class="container header-inner">
-    <a class="brand" href="/" aria-label="Kota Ito ホーム"><span class="brand-symbol" aria-hidden="true"><i></i><i></i><i></i><i></i></span>KOTA ITO<span class="brand-dot">.</span></a>
-    <nav aria-label="メインナビゲーション">
-      <a href="/projects" aria-current={path.startsWith('/projects') ? 'page' : undefined}><span class="nav-number">01</span> Works</a>
-      <a href="/about" aria-current={path.startsWith('/about') ? 'page' : undefined}><span class="nav-number">02</span> About</a>
-      <a class="nav-contact" href="/contact" aria-current={path.startsWith('/contact') ? 'page' : undefined}>Let’s talk <span aria-hidden="true">↗</span></a>
-    </nav>
+    <a class="brand" href={localizedPath(locale, '/')} aria-label={t.homeLabel}>
+      <span class="brand-symbol" aria-hidden="true"><i></i><i></i><i></i><i></i></span>KOTA ITO<span class="brand-dot">.</span>
+    </a>
+    <div class="header-tools">
+      <nav aria-label={t.navLabel}>
+        <a href={localizedPath(locale, '/projects')} aria-current={item('/projects') ? 'page' : undefined}><span class="nav-number">01</span> {t.navWorks}</a>
+        <a href={localizedPath(locale, '/about')} aria-current={item('/about') ? 'page' : undefined}><span class="nav-number">02</span> {t.navAbout}</a>
+        <a class="nav-contact" href={localizedPath(locale, '/contact')} aria-current={item('/contact') ? 'page' : undefined}>{t.navContact} <span aria-hidden="true">↗</span></a>
+      </nav>
+      <div class="lang-switch" role="group" aria-label={t.langLabel}>
+        <a href={localizedPath('ja', current)} hreflang="ja" lang="ja" aria-current={locale === 'ja' ? 'true' : undefined}>JA</a>
+        <a href={localizedPath('en', current)} hreflang="en" lang="en" aria-current={locale === 'en' ? 'true' : undefined}>EN</a>
+      </div>
+    </div>
   </div>
 </header>
